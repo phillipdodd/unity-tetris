@@ -17,7 +17,7 @@ public class Spawn : MonoBehaviour
         
     }
 
-    private void SpawnNext()
+    public void SpawnNext()
     {
         int i = Random.Range(0, groups.Length);
         Instantiate(
