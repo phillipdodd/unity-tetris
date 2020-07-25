@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Group : MonoBehaviour
 {
-    public GameObject gameoverUI;
+    private Gameover gameoverUI;
+    private Spawn spawner;
     private float lastFall = 0;
     // Start is called before the first frame update
     void Start()
     {
+        //todo use GameEvent SO here
+        gameoverUI = FindObjectOfType<Gameover>();
+        spawner = FindObjectOfType<Spawn>(); 
         if (!IsValidGridPos())
         {
-            //todo use GameEvent SO here
-            gameoverUI.SetActive(true);
+            gameoverUI.EndGame();
             Destroy(gameObject);
         }
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -42,7 +46,7 @@ public class Group : MonoBehaviour
                 UpdateGrid();
             else
                 transform.Rotate(0, 0, 90);
-        } else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - lastFall >= 1)
+        } else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - lastFall >= .1)
         {
             transform.position += new Vector3(0, -1, 0);
             if (IsValidGridPos())
@@ -53,7 +57,7 @@ public class Group : MonoBehaviour
             {
                 transform.position += new Vector3(0, 1, 0);
                 Playfield.DeleteFullRows();
-                FindObjectOfType<Spawn>().SpawnNext();
+                spawner.SpawnNext();
                 enabled = false;
             }
             lastFall = Time.time;

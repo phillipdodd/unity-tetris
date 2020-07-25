@@ -11,12 +11,6 @@ public class Spawn : MonoBehaviour
         SpawnNext();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SpawnNext()
     {
         int i = Random.Range(0, groups.Length);

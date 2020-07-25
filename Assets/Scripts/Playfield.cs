@@ -81,11 +81,16 @@ public class Playfield : MonoBehaviour
     public static void DeleteAllBlocks()
     {
         for (int y = 0; y < h; ++y)
+        {
             for (int x = 0; x < w; ++x)
+            {
+                Debug.Log("[" + x + ", " + y + "]");
                 if (grid[x, y] != null)
                 {
                     Destroy(grid[x, y].gameObject);
                     grid[x, y] = null;
                 }
+            }
+        }
     }
 }
