@@ -32,14 +32,14 @@ public class Group : MonoBehaviour
                 UpdateGrid();
             else
                 transform.position += new Vector3(1, 0, 0);
-        } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.W))
+        } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             transform.position += new Vector3(1, 0, 0);
             if (IsValidGridPos())
                 UpdateGrid();
             else
                 transform.position += new Vector3(-1, 0, 0);
-        } else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.D))
+        } else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             transform.Rotate(0, 0, -90);
             
@@ -49,7 +49,7 @@ public class Group : MonoBehaviour
                 transform.Rotate(0, 0, 90);
         } else if (
             Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) ||
-            (Input.GetKey(KeyCode.DownArrow) && Time.time - lastFall >= .5f/2.5f) || 
+            ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && Time.time - lastFall >= .5f/2.5f) || 
             Time.time - lastFall >= .5f
             )
         {
