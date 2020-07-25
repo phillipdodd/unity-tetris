@@ -46,7 +46,11 @@ public class Group : MonoBehaviour
                 UpdateGrid();
             else
                 transform.Rotate(0, 0, 90);
-        } else if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time - lastFall >= .1)
+        } else if (
+            Input.GetKeyDown(KeyCode.DownArrow) || 
+            (Input.GetKey(KeyCode.DownArrow) && Time.time - lastFall >= .5f/2.5f) || 
+            Time.time - lastFall >= .5f
+            )
         {
             transform.position += new Vector3(0, -1, 0);
             if (IsValidGridPos())
