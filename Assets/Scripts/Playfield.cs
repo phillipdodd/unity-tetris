@@ -15,12 +15,6 @@ public class Playfield : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public static Vector2 RoundVec2(Vector2 v)
     {
         return new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
@@ -82,5 +76,16 @@ public class Playfield : MonoBehaviour
                 --y;
             }
         }
+    }
+
+    public static void DeleteAllBlocks()
+    {
+        for (int y = 0; y < h; ++y)
+            for (int x = 0; x < w; ++x)
+                if (grid[x, y] != null)
+                {
+                    Destroy(grid[x, y].gameObject);
+                    grid[x, y] = null;
+                }
     }
 }

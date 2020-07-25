@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Group : MonoBehaviour
 {
+    public GameObject gameoverUI;
     private float lastFall = 0;
     // Start is called before the first frame update
     void Start()
     {
         if (!IsValidGridPos())
         {
-            Debug.Log("GAME OVER");
+            //todo use GameEvent SO here
+            gameoverUI.SetActive(true);
             Destroy(gameObject);
         }
     }
