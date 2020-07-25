@@ -25,29 +25,30 @@ public class Group : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
             transform.position += new Vector3(-1, 0, 0);
             if (IsValidGridPos())
                 UpdateGrid();
             else
                 transform.position += new Vector3(1, 0, 0);
-        } else if (Input.GetKeyDown(KeyCode.RightArrow))
+        } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.W))
         {
             transform.position += new Vector3(1, 0, 0);
             if (IsValidGridPos())
                 UpdateGrid();
             else
                 transform.position += new Vector3(-1, 0, 0);
-        } else if (Input.GetKeyDown(KeyCode.UpArrow))
+        } else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.D))
         {
             transform.Rotate(0, 0, -90);
+            
             if (IsValidGridPos())
                 UpdateGrid();
             else
                 transform.Rotate(0, 0, 90);
         } else if (
-            Input.GetKeyDown(KeyCode.DownArrow) || 
+            Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) ||
             (Input.GetKey(KeyCode.DownArrow) && Time.time - lastFall >= .5f/2.5f) || 
             Time.time - lastFall >= .5f
             )
