@@ -75,10 +75,14 @@ public class Playfield : MonoBehaviour
 
     public static void DeleteAllBlocks()
     {
-        Group[] groups = FindObjectsOfType<Group>();
-        foreach (Group g in groups)
+        GameObject[] groups = GameObject.FindGameObjectsWithTag("Block");
+        foreach (GameObject g in groups)
         {
             Destroy(g);
         }
+
+        for (int x = 0; x < w; x++)
+            for (int y = 0; y < h; y++)
+                grid[x, y] = null;
     }
 }
