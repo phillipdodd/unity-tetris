@@ -8,7 +8,6 @@ public class Playfield : MonoBehaviour
     public static int h = 20;
     public static Transform[,] grid = new Transform[w, h];
 
-
     public static Vector2 RoundVec2(Vector2 v)
     {
         return new Vector2(Mathf.Round(v.x), Mathf.Round(v.y));
@@ -75,10 +74,14 @@ public class Playfield : MonoBehaviour
 
     public static void DeleteAllBlocks()
     {
-        Group[] groups = FindObjectsOfType<Group>();
-        foreach (Group g in groups)
+        GameObject[] groups = GameObject.FindGameObjectsWithTag("Block");
+        foreach (GameObject g in groups)
         {
             Destroy(g);
         }
+
+        for (int x = 0; x < w; ++x)
+            for (int y = 0; y < h; ++y)
+                grid[x, y] = null;
     }
 }
