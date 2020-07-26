@@ -2,87 +2,81 @@
 
 public class Group : MonoBehaviour
 {
-    public bool IsOnDisplay = true;
     private Gameover gameoverUI;
     private Spawn spawner;
     private float lastFall = 0;
-    // Start is called before the first frame update
-    void Start()
+
+    private void OnEnable()
     {
-        //todo use GameEvent SO here
         gameoverUI = FindObjectOfType<Gameover>();
         spawner = FindObjectOfType<Spawn>();
         if (!IsValidGridPos())
         {
             gameoverUI.EndGame();
             Destroy(gameObject);
-        }
+        }        
     }
-
     // Update is called once per frame
     void Update()
     {
-        if (!IsOnDisplay)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            {
-                transform.position += new Vector3(-1, 0, 0);
-                if (IsValidGridPos())
-                    UpdateGrid();
-                else
-                    transform.position += new Vector3(1, 0, 0);
-            } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            {
+            transform.position += new Vector3(-1, 0, 0);
+            if (IsValidGridPos())
+                UpdateGrid();
+            else
                 transform.position += new Vector3(1, 0, 0);
-                if (IsValidGridPos())
-                    UpdateGrid();
-                else
-                    transform.position += new Vector3(-1, 0, 0);
-            } else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
-            {
-                transform.Rotate(0, 0, -90);
+        } 
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            transform.position += new Vector3(1, 0, 0);
+            if (IsValidGridPos())
+                UpdateGrid();
+            else
+                transform.position += new Vector3(-1, 0, 0);
+        } 
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            transform.Rotate(0, 0, -90);
             
-                if (IsValidGridPos())
-                    UpdateGrid();
-                else
-                    transform.Rotate(0, 0, 90);
-            } else if (
-                Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) ||
-                ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && Time.time - lastFall >= .5f/2.5f) || 
-                Time.time - lastFall >= .5f
-                )
+            if (IsValidGridPos())
+                UpdateGrid();
+            else
+                transform.Rotate(0, 0, 90);
+        } 
+        else if (
+            Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) ||
+            ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && Time.time - lastFall >= .5f/2.5f) || 
+            Time.time - lastFall >= .5f
+            )
+        {
+            transform.position += new Vector3(0, -1, 0);
+            if (IsValidGridPos())
             {
-                transform.position += new Vector3(0, -1, 0);
-                if (IsValidGridPos())
-                {
-                    UpdateGrid();
-                } 
-                else
-                {
-                    transform.position += new Vector3(0, 1, 0);
-                    Playfield.DeleteFullRows();
-                    spawner.SpawnNext();
-                    enabled = false;
-                }
-                lastFall = Time.time;
+                UpdateGrid();
+            } 
+            else
+            {
+                transform.position += new Vector3(0, 1, 0);
+                Playfield.DeleteFullRows();
+                spawner.SpawnNext();
+                enabled = false;
             }
+            lastFall = Time.time;
         }
     }
 
     private bool IsValidGridPos()
     {
-        if (!IsOnDisplay)
+        foreach(Transform child in transform)
         {
-            foreach(Transform child in transform)
+            Vector2 v = Playfield.RoundVec2(child.position);
+            if (!Playfield.IsInsideBorder(v))
+                return false;
+            if (Playfield.grid[(int)v.x, (int)v.y] != null &&
+                Playfield.grid[(int)v.x, (int)v.y].parent != transform)
             {
-                Vector2 v = Playfield.RoundVec2(child.position);
-                if (!Playfield.IsInsideBorder(v))
-                    return false;
-                if (Playfield.grid[(int)v.x, (int)v.y] != null &&
-                    Playfield.grid[(int)v.x, (int)v.y].parent != transform)
-                {
-                    return false;
-                }
+                return false;
             }
         }
         return true;

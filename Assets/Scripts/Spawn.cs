@@ -2,9 +2,10 @@
 
 public class Spawn : MonoBehaviour
 {
+    public bool DEBUG = true;
     public Transform nextDisplay;
     public GameObject[] groups;
-    private GameObject displayed;
+    private GameObject displayedAsNext;
 
     private void Start()
     {
@@ -14,25 +15,24 @@ public class Spawn : MonoBehaviour
 
     public void SpawnNext()
     {
-        if (displayed == null)
-            PickNext();
-
-        displayed.transform.position = transform.position;
-        Group g = displayed.GetComponent<Group>();
-        g.IsOnDisplay = false;
+        
+        displayedAsNext.transform.position = transform.position;
+        Group g = displayedAsNext.GetComponent<Group>();
+        g.enabled = true;
         g.UpdateGrid();
 
         PickNext();
     }
 
-    private void PickNext()
+    public void PickNext()
     {
         int i = Random.Range(0, groups.Length);
         GameObject go = Instantiate(
                 groups[i],
                 nextDisplay.position,
                 Quaternion.identity);
-        displayed = go;
+        if (DEBUG) Debug.Log($"Next: {go.name}");
+        displayedAsNext = go;
     }
 
 }
