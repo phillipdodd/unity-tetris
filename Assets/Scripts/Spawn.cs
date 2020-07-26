@@ -1,29 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
+    public Transform nextDisplay;
     public GameObject[] groups;
-    // Start is called before the first frame update
-    void Start()
-    {
-        SpawnNext();
-    }
+    private GameObject displayed;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        PickNext();
+        SpawnNext();
     }
 
     public void SpawnNext()
     {
+        if (displayed == null)
+            PickNext();
+
+        displayed.transform.position = transform.position;
+        Group g = displayed.GetComponent<Group>();
+        g.IsOnDisplay = false;
+        g.UpdateGrid();
+
+        PickNext();
+    }
+
+    private void PickNext()
+    {
         int i = Random.Range(0, groups.Length);
-        Instantiate(
-            groups[i], 
-            transform.position, 
-            Quaternion.identity);
+        GameObject go = Instantiate(
+                groups[i],
+                nextDisplay.position,
+                Quaternion.identity);
+        displayed = go;
     }
 
 }
