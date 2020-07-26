@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
+﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Playfield : MonoBehaviour
 {
@@ -9,11 +8,6 @@ public class Playfield : MonoBehaviour
     public static int h = 20;
     public static Transform[,] grid = new Transform[w, h];
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public static Vector2 RoundVec2(Vector2 v)
     {
@@ -71,6 +65,7 @@ public class Playfield : MonoBehaviour
         {
             if (IsRowFull(y))
             {
+                FindObjectOfType<ScoreController>().UpdateScore();
                 DeleteRow(y);
                 DecreaseRowsAbove(y + 1);
                 --y;
