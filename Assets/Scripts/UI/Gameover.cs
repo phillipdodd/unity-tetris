@@ -24,6 +24,7 @@ public class Gameover : MonoBehaviour
         //todo replace with GameEvent SO's
         Playfield.DeleteAllBlocks();
         restartUI.SetActive(false);
+        spawner.PickNext();
         spawner.SpawnNext();
     }
 }
