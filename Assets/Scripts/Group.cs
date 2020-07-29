@@ -35,7 +35,7 @@ public class Group : MonoBehaviour
             else
                 transform.position += new Vector3(-1, 0, 0);
         } 
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && gameObject.name != "GroupO(Clone)")
         {
             transform.Rotate(0, 0, -90);
             
