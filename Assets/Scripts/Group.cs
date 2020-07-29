@@ -47,7 +47,7 @@ public class Group : MonoBehaviour
         else if (
             Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) ||
             ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && Time.time - lastFall >= .5f/2.5f) || 
-            Time.time - lastFall >= .5f
+            Time.time - lastFall >= .25f
             )
         {
             transform.position += new Vector3(0, -1, 0);

@@ -24,4 +24,9 @@ public class ScoreController : MonoBehaviour
     {
         score++;
     }
+
+    public void ResetScore()
+    {
+        score = 0;
+    }
 }
